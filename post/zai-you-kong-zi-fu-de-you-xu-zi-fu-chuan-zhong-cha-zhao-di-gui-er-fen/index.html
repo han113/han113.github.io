@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>在有空字符的有序字符串中查找 -- 递归、二分 | Gridea</title>
+<meta name="description" content="沮丧且颓废">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" href="https://han113.github.io//favicon.ico?v=1580962629367">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://han113.github.io//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+  </head>
+  <body>
+  
+    <nav class="navbar border fixed split-nav">
+  <div class="nav-brand">
+    <h3><a href="https://han113.github.io/">Gridea</a></h3>
+  </div>
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+        
+          <li>
+            
+              <a href="/" class="menu">
+                首页
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/archives" class="menu">
+                归档
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/tags" class="menu">
+                标签
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/post/about" class="menu">
+                关于
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div id="top" class="row site">
+      <div class="sm-12 md-8 col">
+        <div class="paper">
+          <article class="article">
+            <h1>在有空字符的有序字符串中查找 -- 递归、二分</h1>
+            <p class="article-meta">
+              2020-02-06
+              
+                <a href="https://han113.github.io/tag/4mlHys1lB" class="badge secondary">
+                  算法题
+                </a>
+              
+            </p>
+            
+            <div class="post-content">
+              <pre><code>有个排序后的字符串数组，其中散布着一些空字符串，编写一个方法，找出给定字符串（肯定不是空字符串）的索引。
+</code></pre>
+<p><code>如[&quot;&quot;,a,abd,abe,&quot;&quot;,ba,&quot;&quot;,bcd,&quot;&quot;,cab,&quot;&quot;]找bcd</code></p>
+<h1 id="思考">思考</h1>
+<pre><code>题目中说到了有序 ：二分法
+    - 先确定一个中点`mid`
+    - 让查找数和`mid`比较，大于在`mid`左侧查找，小于在`mid`右侧查找，找到直接返回（**递归实现**）
+    - 结束条件：左侧或者右侧都没有找到
+</code></pre>
+<h1 id="代码">代码</h1>
+<pre><code class="language-java"> public static int OrderlyValueIndex(String[] arr, String findValue, int left, int right) {
+          if (left&gt;=right){ //两个已经找完都没有找到
+              return -1;
+          }
+          int midIndex=left+((right-left)&gt;&gt;1); //right-left是left-right这段的长度，右移一个就是除2，加left就是当前数组的中心下标
+          while (arr[midIndex]==&quot;&quot;){ //判断是否是空串，是就右移
+              midIndex++;
+              if (midIndex&gt;right){//这是为了安全起见，对mid进行限制
+              return -1;
+          }
+          }
+          //mid有了，开始判断（compareTo=1是前者&gt;后者，=0是两者相等，=-1是前者小于后者）
+          if (findValue.compareTo(arr[midIndex])&gt;0){ //大于0说明查找的参数在右侧
+              return OrderlyValueIndex(arr,findValue,midIndex+1,right); 
+          }else if (findValue.compareTo(arr[midIndex])&lt;0){//说明在左侧
+              return OrderlyValueIndex(arr,findValue,left,midIndex-1);
+          }else {
+              return midIndex;//找到就返回
+          }
+      }
+</code></pre>
+
+            </div>
+          </article>
+        </div>
+        <div class="paper" data-aos="fade-in">
+          
+            <div class="next-post">
+              <div class="next">
+                下一篇
+              </div>
+              <a href="https://han113.github.io/post/bindingexception-wen-ti-ji-jie-jue">
+                <h3 class="post-title">
+                  BindingException问题及解决
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+        
+          
+            <div class="paper" data-aos="fade-in">
+              <div id="gitalk-container"></div>
+            </div>
+          
+
+          
+        
+      </div>
+
+      <div class="sm-12 md-4 col sidebar">
+  <div class="paper info-container">
+    <img src="https://han113.github.io//images/avatar.png?v=1580962629367" class="no-responsive avatar">
+    <div class="text-muted">沮丧且颓废</div>
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      最新文章
+    </div>
+    <div class="row">
+      <ul>
+        
+          
+            <li>
+              <a href="https://han113.github.io/post/qiu-jie-a-de-n-ci-fang">求解 a 的 n 次方</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://han113.github.io/post/zai-you-kong-zi-fu-de-you-xu-zi-fu-chuan-zhong-cha-zhao-di-gui-er-fen">在有空字符的有序字符串中查找 -- 递归、二分</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://han113.github.io/post/bindingexception-wen-ti-ji-jie-jue">BindingException问题及解决</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://han113.github.io/post/about">关于</a>
+            </li>
+          
+        
+      </ul>
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      标签列表
+    </div>
+    <div class="row">
+      
+        <a href="https://han113.github.io/tag/4mlHys1lB" class="badge ">
+          算法题
+        </a>
+      
+        <a href="https://han113.github.io/tag/ENOT2rfnC" class="badge success">
+          项目问题
+        </a>
+      
+    </div>
+  </div>
+  <div class="paper">
+     | <a class="rss" href="https://han113.github.io//atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+
+
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '053324a20d02e09d53d6',
+        clientSecret: '6d76bdc5dfad6b210c685620a3926ab56fd623fe',
+        repo: 'han113.github.io',
+        owner: 'han113',
+        admin: ['han113'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

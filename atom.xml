@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://han113.github.io/</id>
+    <title>Gridea</title>
+    <updated>2020-02-06T04:20:02.837Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://han113.github.io/"/>
+    <link rel="self" href="https://han113.github.io/atom.xml"/>
+    <subtitle>沮丧且颓废</subtitle>
+    <logo>https://han113.github.io/images/avatar.png</logo>
+    <icon>https://han113.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[求解 a 的 n 次方]]></title>
+        <id>https://han113.github.io/post/qiu-jie-a-de-n-ci-fang</id>
+        <link href="https://han113.github.io/post/qiu-jie-a-de-n-ci-fang">
+        </link>
+        <updated>2020-02-06T02:24:38.000Z</updated>
+        <content type="html"><![CDATA[<pre><code>给定数字a和n，求a的n次方
+</code></pre>
+<h1 id="暴力解法">暴力解法</h1>
+<pre><code class="language-java">public static int getNum1(int a,int n){
+        int num=1;
+        for (int i=0;i&lt;n;i++){
+            num=a*num;
+        }
+        return num;
+    }
+</code></pre>
+<p><code>暴力的时间复杂度太高，可以换个方法</code></p>
+<h1 id="位运算-递归">位运算 递归</h1>
+<pre><code>思考： 位运算左移是*2倍，假如求解的是次方n是7，一个数`power`记录左移次数，我们可以power
+&lt;&lt;2（一次是2，两次是2*2），用一个数`num`记录左移后的数，剩余的是次方数是3，可以让a&lt;&lt;1,剩余的次方是1,直接返回a
+</code></pre>
+<pre><code class="language-java">  if（a==1）{
+        返回a
+    }    
+    num=a;
+    while(还能左移){
+        num=num*num；
+        左移；
+    }
+    进入递归，计算剩下的次方
+</code></pre>
+<pre><code class="language-java">public static int getNum(int a,int n){
+     if (n==0){
+            return 1;
+     }
+        if (n==1){
+            return a;
+        }
+        int num=a;
+        int Power=1;
+
+        while ((Power&lt;&lt;1)&lt;=n){ //先判断下能否左移，能就说明还可以进行次方运算
+            num=num*num;//次方运算，每次都是num^2
+            Power&lt;&lt;=1; //真正的左移
+        }
+        return num*getNum(a,n-Power);//n-power是剩余的次方数
+    }
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[在有空字符的有序字符串中查找 -- 递归、二分]]></title>
+        <id>https://han113.github.io/post/zai-you-kong-zi-fu-de-you-xu-zi-fu-chuan-zhong-cha-zhao-di-gui-er-fen</id>
+        <link href="https://han113.github.io/post/zai-you-kong-zi-fu-de-you-xu-zi-fu-chuan-zhong-cha-zhao-di-gui-er-fen">
+        </link>
+        <updated>2020-02-06T02:21:25.000Z</updated>
+        <content type="html"><![CDATA[<pre><code>有个排序后的字符串数组，其中散布着一些空字符串，编写一个方法，找出给定字符串（肯定不是空字符串）的索引。
+</code></pre>
+<p><code>如[&quot;&quot;,a,abd,abe,&quot;&quot;,ba,&quot;&quot;,bcd,&quot;&quot;,cab,&quot;&quot;]找bcd</code></p>
+<h1 id="思考">思考</h1>
+<pre><code>题目中说到了有序 ：二分法
+    - 先确定一个中点`mid`
+    - 让查找数和`mid`比较，大于在`mid`左侧查找，小于在`mid`右侧查找，找到直接返回（**递归实现**）
+    - 结束条件：左侧或者右侧都没有找到
+</code></pre>
+<h1 id="代码">代码</h1>
+<pre><code class="language-java"> public static int OrderlyValueIndex(String[] arr, String findValue, int left, int right) {
+          if (left&gt;=right){ //两个已经找完都没有找到
+              return -1;
+          }
+          int midIndex=left+((right-left)&gt;&gt;1); //right-left是left-right这段的长度，右移一个就是除2，加left就是当前数组的中心下标
+          while (arr[midIndex]==&quot;&quot;){ //判断是否是空串，是就右移
+              midIndex++;
+              if (midIndex&gt;right){//这是为了安全起见，对mid进行限制
+              return -1;
+          }
+          }
+          //mid有了，开始判断（compareTo=1是前者&gt;后者，=0是两者相等，=-1是前者小于后者）
+          if (findValue.compareTo(arr[midIndex])&gt;0){ //大于0说明查找的参数在右侧
+              return OrderlyValueIndex(arr,findValue,midIndex+1,right); 
+          }else if (findValue.compareTo(arr[midIndex])&lt;0){//说明在左侧
+              return OrderlyValueIndex(arr,findValue,left,midIndex-1);
+          }else {
+              return midIndex;//找到就返回
+          }
+      }
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[BindingException问题及解决]]></title>
+        <id>https://han113.github.io/post/bindingexception-wen-ti-ji-jie-jue</id>
+        <link href="https://han113.github.io/post/bindingexception-wen-ti-ji-jie-jue">
+        </link>
+        <updated>2020-02-06T02:16:40.000Z</updated>
+        <content type="html"><![CDATA[<pre><code class="language-java">org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): com.nowcoder.toutiao.dao.NewsDao.selectByUserIdAndOffset
+</code></pre>
+<h1 id="问题">问题</h1>
+<p>mapper和xml文件没有匹配上（没有找到xml文件）</p>
+<h1 id="判断">判断</h1>
+<p><img src="https://han113.github.io//post-images/1580955583157.png" alt="" loading="lazy"><br>
+查看target下的class的dao中是否有xml文件，如果没有，说明打war包没有找到xml文件</p>
+<h1 id="解决">解决</h1>
+<ul>
+<li>检查 xml 文件所在的 package 名称是否和 interface 对应的 package 名称一一对应</li>
+<li>检查 xml 文件的 namespace 是否和 xml 文件的 package 名称一一对应</li>
+<li>检查函数名称能否对应上</li>
+<li>去掉 xml 文件中的中文注释</li>
+<li>随意在 xml 文件中加一个空格或者空行然后保存</li>
+<li>直接放在dao包中</li>
+</ul>
+]]></content>
+    </entry>
+</feed>
