@@ -4,191 +4,65 @@
     <meta charset="utf-8" >
 
 <title>算法题 | Gridea</title>
-<meta name="description" content="沮丧且颓废">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="shortcut icon" href="https://han113.github.io//favicon.ico?v=1581164823242">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="shortcut icon" href="https://han113.github.io//favicon.ico?v=1581164869793">
 <link rel="stylesheet" href="https://han113.github.io//styles/main.css">
 
 
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-
 
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 
+
+    <meta name="description" content="沮丧且颓废">
   </head>
   <body>
-    <nav class="navbar border fixed split-nav">
-  <div class="nav-brand">
-    <h3><a href="https://han113.github.io/">Gridea</a></h3>
-  </div>
-  <div class="collapsible">
-    <input id="collapsible1" type="checkbox" name="collapsible1">
-    <button>
-      <label for="collapsible1">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
-      </label>
-    </button>
-    <div class="collapsible-body">
-      <ul class="inline">
-        
-          <li>
-            
-              <a href="/" class="menu">
-                首页
-              </a>
-            
-          </li>
-        
-          <li>
-            
-              <a href="/archives" class="menu">
-                归档
-              </a>
-            
-          </li>
-        
-          <li>
-            
-              <a href="/tags" class="menu">
-                标签
-              </a>
-            
-          </li>
-        
-          <li>
-            
-              <a href="/post/about" class="menu">
-                关于
-              </a>
-            
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
+    <div id="app" class="main">
 
-    <div id="top" class="row site">
-      <div class="sm-12 md-8 col">
-        <div class="paper">
-          <h2 class="current-tag">标签: 算法题</h2>
-          
-  <article class="article">
-    <h2 class="article-title">
-      <a href="https://han113.github.io/post/bu-fen-he-wen-ti">部分和问题</a>
-    </h2>
-    <p class="article-meta">
-      2020-02-08
-      
-        <a href="https://han113.github.io/tag/4mlHys1lB" class="badge ">
-          算法题
-        </a>
-      
-    </p>
-    <p class="text-lead">
-      
-    </p>
-    <div class="row">
-      <a href="https://han113.github.io/post/bu-fen-he-wen-ti" class="readmore-link">
-        <button>
-          Read More
-        </button>
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://han113.github.io/">
+        <img src="https://han113.github.io//images/avatar.png?v=1581164869793" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
       </a>
-    </div>
-  </article>
-
-  <article class="article">
-    <h2 class="article-title">
-      <a href="https://han113.github.io/post/lake-counting-shui-wa-ji-shu">Lake Counting--水洼计数</a>
-    </h2>
-    <p class="article-meta">
-      2020-02-08
-      
-        <a href="https://han113.github.io/tag/4mlHys1lB" class="badge warning">
-          算法题
-        </a>
-      
-    </p>
-    <p class="text-lead">
-      
-    </p>
-    <div class="row">
-      <a href="https://han113.github.io/post/lake-counting-shui-wa-ji-shu" class="readmore-link">
-        <button>
-          Read More
-        </button>
-      </a>
-    </div>
-  </article>
-
-  <article class="article">
-    <h2 class="article-title">
-      <a href="https://han113.github.io/post/qiu-jie-a-de-n-ci-fang">求解 a 的 n 次方</a>
-    </h2>
-    <p class="article-meta">
-      2020-02-06
-      
-        <a href="https://han113.github.io/tag/4mlHys1lB" class="badge ">
-          算法题
-        </a>
-      
-    </p>
-    <p class="text-lead">
-      
-    </p>
-    <div class="row">
-      <a href="https://han113.github.io/post/qiu-jie-a-de-n-ci-fang" class="readmore-link">
-        <button>
-          Read More
-        </button>
-      </a>
-    </div>
-  </article>
-
-  <article class="article">
-    <h2 class="article-title">
-      <a href="https://han113.github.io/post/zai-you-kong-zi-fu-de-you-xu-zi-fu-chuan-zhong-cha-zhao-di-gui-er-fen">在有空字符的有序字符串中查找 -- 递归、二分</a>
-    </h2>
-    <p class="article-meta">
-      2020-02-06
-      
-        <a href="https://han113.github.io/tag/4mlHys1lB" class="badge secondary">
-          算法题
-        </a>
-      
-    </p>
-    <p class="text-lead">
-      
-    </p>
-    <div class="row">
-      <a href="https://han113.github.io/post/zai-you-kong-zi-fu-de-you-xu-zi-fu-chuan-zhong-cha-zhao-di-gui-er-fen" class="readmore-link">
-        <button>
-          Read More
-        </button>
-      </a>
-    </div>
-  </article>
-
-
-        </div>
-        <div class="row flex-edges">
-  
-  
-</div>
-
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
       </div>
-      <div class="sm-12 md-4 col sidebar">
-  <div class="paper info-container">
-    <img src="https://han113.github.io//images/avatar.png?v=1581164823242" class="no-responsive avatar">
-    <div class="text-muted">沮丧且颓废</div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
     <div class="social-container">
       
         
@@ -202,85 +76,115 @@
         
       
     </div>
-  </div>
-  <div class="paper">
-    <div class="sidebar-title">
-      最新文章
+    <div class="site-description">
+      沮丧且颓废
     </div>
-    <div class="row">
-      <ul>
-        
-          
-            <li>
-              <a href="https://han113.github.io/post/bu-fen-he-wen-ti">部分和问题</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://han113.github.io/post/lake-counting-shui-wa-ji-shu">Lake Counting--水洼计数</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://han113.github.io/post/qiu-jie-a-de-n-ci-fang">求解 a 的 n 次方</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://han113.github.io/post/zai-you-kong-zi-fu-de-you-xu-zi-fu-chuan-zhong-cha-zhao-di-gui-er-fen">在有空字符的有序字符串中查找 -- 递归、二分</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://han113.github.io/post/bindingexception-wen-ti-ji-jie-jue">BindingException问题及解决</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="https://han113.github.io/post/about">关于</a>
-            </li>
-          
-        
-      </ul>
+    <div class="site-footer">
+       | <a class="rss" href="https://han113.github.io//atom.xml" target="_blank">RSS</a>
     </div>
-  </div>
-  <div class="paper">
-    <div class="sidebar-title">
-      标签列表
-    </div>
-    <div class="row">
-      
-        <a href="https://han113.github.io/tag/4mlHys1lB" class="badge ">
-          算法题
-        </a>
-      
-        <a href="https://han113.github.io/tag/ENOT2rfnC" class="badge secondary">
-          项目问题
-        </a>
-      
-    </div>
-  </div>
-  <div class="paper">
-     | <a class="rss" href="https://han113.github.io//atom.xml" target="_blank">RSS</a>
   </div>
 </div>
 
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <h2 class="current-tag">标签: 算法题</h2>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://han113.github.io/post/bu-fen-he-wen-ti">
+                  <h2 class="post-title">部分和问题</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-08
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+                <a class="right" href="https://han113.github.io/post/bu-fen-he-wen-ti">
+                  <div class="feature-container" style="background-image: url('https://han113.github.io//post-images/bu-fen-he-wen-ti.jpg')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://han113.github.io/post/lake-counting-shui-wa-ji-shu">
+                  <h2 class="post-title">Lake Counting--水洼计数</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-08
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+                <a class="right" href="https://han113.github.io/post/lake-counting-shui-wa-ji-shu">
+                  <div class="feature-container" style="background-image: url('https://han113.github.io//post-images/lake-counting-shui-wa-ji-shu.png')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://han113.github.io/post/qiu-jie-a-de-n-ci-fang">
+                  <h2 class="post-title">求解 a 的 n 次方</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-06
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://han113.github.io/post/zai-you-kong-zi-fu-de-you-xu-zi-fu-chuan-zhong-cha-zhao-di-gui-er-fen">
+                  <h2 class="post-title">在有空字符的有序字符串中查找 -- 递归、二分</h2>
+                </a>
+                <div class="post-date">
+                  2020-02-06
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
+              
+            </article>
+          
+
+          <div class="pagination-container">
+  
+  
+</div>
+
+        </div>
+      </div>
     </div>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-
 <script type="application/javascript">
 
 AOS.init();
 
-hljs.initHighlightingOnLoad()
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
 </script>
+
+
 
 
 
