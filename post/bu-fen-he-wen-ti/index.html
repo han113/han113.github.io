@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>在有空字符的有序字符串中查找 -- 递归、二分 | Gridea</title>
+<title>部分和问题 | Gridea</title>
 <meta name="description" content="沮丧且颓废">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -87,48 +87,50 @@
       <div class="sm-12 md-8 col">
         <div class="paper">
           <article class="article">
-            <h1>在有空字符的有序字符串中查找 -- 递归、二分</h1>
+            <h1>部分和问题</h1>
             <p class="article-meta">
-              2020-02-06
+              2020-02-08
               
-                <a href="https://han113.github.io/tag/4mlHys1lB" class="badge ">
+                <a href="https://han113.github.io/tag/4mlHys1lB" class="badge secondary">
                   算法题
                 </a>
               
             </p>
             
+              <img src="https://han113.github.io//post-images/bu-fen-he-wen-ti.jpg" alt="部分和问题">
+            
             <div class="post-content">
-              <pre><code>有个排序后的字符串数组，其中散布着一些空字符串，编写一个方法，找出给定字符串（肯定不是空字符串）的索引。
-</code></pre>
-<p><code>如[&quot;&quot;,a,abd,abe,&quot;&quot;,ba,&quot;&quot;,bcd,&quot;&quot;,cab,&quot;&quot;]找bcd</code></p>
-<h1 id="思考">思考</h1>
-<pre><code>题目中说到了有序 ：二分法
-    - 先确定一个中点`mid`
-    - 让查找数和`mid`比较，大于在`mid`左侧查找，小于在`mid`右侧查找，找到直接返回（**递归实现**）
-    - 结束条件：左侧或者右侧都没有找到
-</code></pre>
+              <p><img src="https://han113.github.io//post-images/1581145724635.png" alt="" loading="lazy"><br>
+刚开始看想起了力扣的”两数之和“，那个指定了组成和的数量，这个没有指出，很懵逼<br>
+看了别人的解释，懂了一点点，记录一下</p>
+<p>数组每个元素都有两个状态，<code>用</code>或者<code>不用</code>，从a1按顺序决定每个数用或不用后，就形成了个二叉树<br>
+<img src="https://han113.github.io//post-images/1581146474066.jpg" alt="" loading="lazy"><br>
+第二个是我自己画的，有点乱，最左侧可以看出都是sum=0，说明数组每个元素都不用，其他情况类推，二叉树图把每个元素用或不用的状态都包括了</p>
 <h1 id="代码">代码</h1>
-<pre><code class="language-java"> public static int OrderlyValueIndex(String[] arr, String findValue, int left, int right) {
-          if (left&gt;=right){ //两个已经找完都没有找到
-              return -1;
-          }
-          int midIndex=left+((right-left)&gt;&gt;1); //right-left是left-right这段的长度，右移一个就是除2，加left就是当前数组的中心下标
-          while (arr[midIndex]==&quot;&quot;){ //判断是否是空串，是就右移
-              midIndex++;
-              if (midIndex&gt;right){//这是为了安全起见，对mid进行限制
-              return -1;
-          }
-          }
-          //mid有了，开始判断（compareTo=1是前者&gt;后者，=0是两者相等，=-1是前者小于后者）
-          if (findValue.compareTo(arr[midIndex])&gt;0){ //大于0说明查找的参数在右侧
-              return OrderlyValueIndex(arr,findValue,midIndex+1,right); 
-          }else if (findValue.compareTo(arr[midIndex])&lt;0){//说明在左侧
-              return OrderlyValueIndex(arr,findValue,left,midIndex-1);
-          }else {
-              return midIndex;//找到就返回
-          }
-      }
+<pre><code class="language-java">//n是数组元素个数，k是指定的和
+public static boolean dfs(int i,int sum){
+         if (i==n){ //当i是最后一个元素时，判断是不是k
+            return sum==k;
+        }
+        if (dfs(i+1,sum)){ //先执行不加a[i]的情况，也就是不远该元素的情况
+            return true;
+        }
+
+        if (dfs(i+1,sum+a[i])){//选择该元素的情况
+            return true;
+        }
+        return false;
+    }
 </code></pre>
+<h1 id="部分过程">部分过程</h1>
+<ul>
+<li>执行不加a[i]的情况，到i=n</li>
+<li>然后进行i=n的判断，判断当然不成立</li>
+<li>回退，进入i=3的情况，执行加a[i]的情况</li>
+<li>此时是sum等于最后一个元素值，执行完，回退</li>
+<li>到达i=2的情况.....<br>
+<code>结合我手绘的图，最先执行的是最左侧的一列，回退就是走右子树</code></li>
+</ul>
 
             </div>
           </article>
@@ -139,9 +141,9 @@
               <div class="next">
                 下一篇
               </div>
-              <a href="https://han113.github.io/post/bindingexception-wen-ti-ji-jie-jue">
+              <a href="https://han113.github.io/post/lake-counting-shui-wa-ji-shu">
                 <h3 class="post-title">
-                  BindingException问题及解决
+                  Lake Counting--水洼计数
                 </h3>
               </a>
             </div>
@@ -228,11 +230,11 @@
     </div>
     <div class="row">
       
-        <a href="https://han113.github.io/tag/4mlHys1lB" class="badge success">
+        <a href="https://han113.github.io/tag/4mlHys1lB" class="badge warning">
           算法题
         </a>
       
-        <a href="https://han113.github.io/tag/ENOT2rfnC" class="badge ">
+        <a href="https://han113.github.io/tag/ENOT2rfnC" class="badge warning">
           项目问题
         </a>
       

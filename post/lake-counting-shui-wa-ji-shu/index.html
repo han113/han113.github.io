@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>在有空字符的有序字符串中查找 -- 递归、二分 | Gridea</title>
+<title>Lake Counting--水洼计数 | Gridea</title>
 <meta name="description" content="沮丧且颓废">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -87,47 +87,74 @@
       <div class="sm-12 md-8 col">
         <div class="paper">
           <article class="article">
-            <h1>在有空字符的有序字符串中查找 -- 递归、二分</h1>
+            <h1>Lake Counting--水洼计数</h1>
             <p class="article-meta">
-              2020-02-06
+              2020-02-08
               
-                <a href="https://han113.github.io/tag/4mlHys1lB" class="badge ">
+                <a href="https://han113.github.io/tag/4mlHys1lB" class="badge warning">
                   算法题
                 </a>
               
             </p>
             
+              <img src="https://han113.github.io//post-images/lake-counting-shui-wa-ji-shu.png" alt="Lake Counting--水洼计数">
+            
             <div class="post-content">
-              <pre><code>有个排序后的字符串数组，其中散布着一些空字符串，编写一个方法，找出给定字符串（肯定不是空字符串）的索引。
-</code></pre>
-<p><code>如[&quot;&quot;,a,abd,abe,&quot;&quot;,ba,&quot;&quot;,bcd,&quot;&quot;,cab,&quot;&quot;]找bcd</code></p>
-<h1 id="思考">思考</h1>
-<pre><code>题目中说到了有序 ：二分法
-    - 先确定一个中点`mid`
-    - 让查找数和`mid`比较，大于在`mid`左侧查找，小于在`mid`右侧查找，找到直接返回（**递归实现**）
-    - 结束条件：左侧或者右侧都没有找到
-</code></pre>
+              <p><img src="https://han113.github.io//post-images/1581143714758.png" alt="" loading="lazy"><br>
+<code>图上说的水洼就是 被.围起来的w的范围数，示例的图就像是片海域，.是海水，w是小岛，题中的水洼数就是指被围起来的“小岛数“，图上就可以看出是”三个“小岛</code></p>
+<p><code>这个在某种范围内进行搜索可以用dfs解决</code></p>
+<h1 id="思路">思路：</h1>
+<ul>
+<li>把图用二维数组表示，遍历二维数组的每个元素，判断是否是w，是进行dfs</li>
+<li>dfs中，先把该点置成’.‘，把该点向8个方向扩展，看是否有w与他相邻，有就继续递归dfs，没有就返回，说明找到了一个水洼</li>
+<li>for循环执行dfs的次数就是有多少个水洼</li>
+</ul>
 <h1 id="代码">代码</h1>
-<pre><code class="language-java"> public static int OrderlyValueIndex(String[] arr, String findValue, int left, int right) {
-          if (left&gt;=right){ //两个已经找完都没有找到
-              return -1;
-          }
-          int midIndex=left+((right-left)&gt;&gt;1); //right-left是left-right这段的长度，右移一个就是除2，加left就是当前数组的中心下标
-          while (arr[midIndex]==&quot;&quot;){ //判断是否是空串，是就右移
-              midIndex++;
-              if (midIndex&gt;right){//这是为了安全起见，对mid进行限制
-              return -1;
-          }
-          }
-          //mid有了，开始判断（compareTo=1是前者&gt;后者，=0是两者相等，=-1是前者小于后者）
-          if (findValue.compareTo(arr[midIndex])&gt;0){ //大于0说明查找的参数在右侧
-              return OrderlyValueIndex(arr,findValue,midIndex+1,right); 
-          }else if (findValue.compareTo(arr[midIndex])&lt;0){//说明在左侧
-              return OrderlyValueIndex(arr,findValue,left,midIndex-1);
-          }else {
-              return midIndex;//找到就返回
-          }
-      }
+<pre><code class="language-java">public class Lake_Counting {
+    static int[][] Next={
+            {0,1},{1,0},{0,-1},{-1,0},{-1,1},{-1,-1},{1,1},{1,-1} 
+    };//方便移动，也可以用for循环代替，只是时间复杂度高
+    static int N=10;
+    static int M=12;
+    static int[][] Lake={};
+    public static void main(String[] args) {
+        System.out.println(Slove());
+    }
+    public static int  Slove(){
+        int res=0;//这个标记执行dfs的次数，执行多少次就是有多少个水洼
+        for (int i=0;i&lt;N;i++ ){//便利园子中的每个点
+            for (int j=0;j&lt;M;j++){
+                if (Lake[i][j]=='W'){
+                    dfs(i,j);
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
+    public static void dfs(int x,int y){
+       Lake[x][y]='.'; //变成。 说明这个坐标已经被标成水洼，不需要重复标记
+       /***
+       for（int  i=-1；i&lt;=1;i++）{
+           for（int j=-1;j&lt;=1;j++）{
+               int nx=x+i;
+               int ny=y+j;
+           }
+       }
+       ***/
+        for (int i=0;i&lt;Next.length;i++){ //这里也可以用上面的for循环代替
+            int nx=x+Next[i][0];//下一个点x坐标
+            int ny=y+Next[i][1];//下一个点y坐标
+            if (nx&gt;=0 &amp;&amp; nx&lt;=M &amp;&amp; ny&gt;=0 &amp;&amp; ny&lt;=N &amp;&amp; Lake[nx][ny]=='w'){//判断坐标是否在园子内，并且是否是w
+                dfs(nx,ny);//递归
+            }
+        }
+        //如果找不到，说明该点附近没有水洼
+        return;
+    }
+}
+
 </code></pre>
 
             </div>
@@ -139,9 +166,9 @@
               <div class="next">
                 下一篇
               </div>
-              <a href="https://han113.github.io/post/bindingexception-wen-ti-ji-jie-jue">
+              <a href="https://han113.github.io/post/qiu-jie-a-de-n-ci-fang">
                 <h3 class="post-title">
-                  BindingException问题及解决
+                  求解 a 的 n 次方
                 </h3>
               </a>
             </div>
@@ -232,7 +259,7 @@
           算法题
         </a>
       
-        <a href="https://han113.github.io/tag/ENOT2rfnC" class="badge ">
+        <a href="https://han113.github.io/tag/ENOT2rfnC" class="badge secondary">
           项目问题
         </a>
       

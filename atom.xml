@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://han113.github.io/</id>
     <title>Gridea</title>
-    <updated>2020-02-06T04:20:02.837Z</updated>
+    <updated>2020-02-08T12:27:05.728Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://han113.github.io/"/>
     <link rel="self" href="https://han113.github.io/atom.xml"/>
@@ -10,6 +10,109 @@
     <logo>https://han113.github.io/images/avatar.png</logo>
     <icon>https://han113.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[部分和问题]]></title>
+        <id>https://han113.github.io/post/bu-fen-he-wen-ti</id>
+        <link href="https://han113.github.io/post/bu-fen-he-wen-ti">
+        </link>
+        <updated>2020-02-08T07:07:45.000Z</updated>
+        <content type="html"><![CDATA[<p><img src="https://han113.github.io//post-images/1581145724635.png" alt="" loading="lazy"><br>
+刚开始看想起了力扣的”两数之和“，那个指定了组成和的数量，这个没有指出，很懵逼<br>
+看了别人的解释，懂了一点点，记录一下</p>
+<p>数组每个元素都有两个状态，<code>用</code>或者<code>不用</code>，从a1按顺序决定每个数用或不用后，就形成了个二叉树<br>
+<img src="https://han113.github.io//post-images/1581146474066.jpg" alt="" loading="lazy"><br>
+第二个是我自己画的，有点乱，最左侧可以看出都是sum=0，说明数组每个元素都不用，其他情况类推，二叉树图把每个元素用或不用的状态都包括了</p>
+<h1 id="代码">代码</h1>
+<pre><code class="language-java">//n是数组元素个数，k是指定的和
+public static boolean dfs(int i,int sum){
+         if (i==n){ //当i是最后一个元素时，判断是不是k
+            return sum==k;
+        }
+        if (dfs(i+1,sum)){ //先执行不加a[i]的情况，也就是不远该元素的情况
+            return true;
+        }
+
+        if (dfs(i+1,sum+a[i])){//选择该元素的情况
+            return true;
+        }
+        return false;
+    }
+</code></pre>
+<h1 id="部分过程">部分过程</h1>
+<ul>
+<li>执行不加a[i]的情况，到i=n</li>
+<li>然后进行i=n的判断，判断当然不成立</li>
+<li>回退，进入i=3的情况，执行加a[i]的情况</li>
+<li>此时是sum等于最后一个元素值，执行完，回退</li>
+<li>到达i=2的情况.....<br>
+<code>结合我手绘的图，最先执行的是最左侧的一列，回退就是走右子树</code></li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Lake Counting--水洼计数]]></title>
+        <id>https://han113.github.io/post/lake-counting-shui-wa-ji-shu</id>
+        <link href="https://han113.github.io/post/lake-counting-shui-wa-ji-shu">
+        </link>
+        <updated>2020-02-08T06:32:25.000Z</updated>
+        <content type="html"><![CDATA[<p><img src="https://han113.github.io//post-images/1581143714758.png" alt="" loading="lazy"><br>
+<code>图上说的水洼就是 被.围起来的w的范围数，示例的图就像是片海域，.是海水，w是小岛，题中的水洼数就是指被围起来的“小岛数“，图上就可以看出是”三个“小岛</code></p>
+<p><code>这个在某种范围内进行搜索可以用dfs解决</code></p>
+<h1 id="思路">思路：</h1>
+<ul>
+<li>把图用二维数组表示，遍历二维数组的每个元素，判断是否是w，是进行dfs</li>
+<li>dfs中，先把该点置成’.‘，把该点向8个方向扩展，看是否有w与他相邻，有就继续递归dfs，没有就返回，说明找到了一个水洼</li>
+<li>for循环执行dfs的次数就是有多少个水洼</li>
+</ul>
+<h1 id="代码">代码</h1>
+<pre><code class="language-java">public class Lake_Counting {
+    static int[][] Next={
+            {0,1},{1,0},{0,-1},{-1,0},{-1,1},{-1,-1},{1,1},{1,-1} 
+    };//方便移动，也可以用for循环代替，只是时间复杂度高
+    static int N=10;
+    static int M=12;
+    static int[][] Lake={};
+    public static void main(String[] args) {
+        System.out.println(Slove());
+    }
+    public static int  Slove(){
+        int res=0;//这个标记执行dfs的次数，执行多少次就是有多少个水洼
+        for (int i=0;i&lt;N;i++ ){//便利园子中的每个点
+            for (int j=0;j&lt;M;j++){
+                if (Lake[i][j]=='W'){
+                    dfs(i,j);
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
+    public static void dfs(int x,int y){
+       Lake[x][y]='.'; //变成。 说明这个坐标已经被标成水洼，不需要重复标记
+       /***
+       for（int  i=-1；i&lt;=1;i++）{
+           for（int j=-1;j&lt;=1;j++）{
+               int nx=x+i;
+               int ny=y+j;
+           }
+       }
+       ***/
+        for (int i=0;i&lt;Next.length;i++){ //这里也可以用上面的for循环代替
+            int nx=x+Next[i][0];//下一个点x坐标
+            int ny=y+Next[i][1];//下一个点y坐标
+            if (nx&gt;=0 &amp;&amp; nx&lt;=M &amp;&amp; ny&gt;=0 &amp;&amp; ny&lt;=N &amp;&amp; Lake[nx][ny]=='w'){//判断坐标是否在园子内，并且是否是w
+                dfs(nx,ny);//递归
+            }
+        }
+        //如果找不到，说明该点附近没有水洼
+        return;
+    }
+}
+
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[求解 a 的 n 次方]]></title>
         <id>https://han113.github.io/post/qiu-jie-a-de-n-ci-fang</id>
