@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://han113.github.io/</id>
     <title>看远看近</title>
-    <updated>2020-02-08T12:32:25.418Z</updated>
+    <updated>2020-02-11T07:29:21.471Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://han113.github.io/"/>
     <link rel="self" href="https://han113.github.io/atom.xml"/>
@@ -10,6 +10,44 @@
     <logo>https://han113.github.io/images/avatar.png</logo>
     <icon>https://han113.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 看远看近</rights>
+    <entry>
+        <title type="html"><![CDATA[旋转数组]]></title>
+        <id>https://han113.github.io/post/xuan-zhuan-shu-zu</id>
+        <link href="https://han113.github.io/post/xuan-zhuan-shu-zu">
+        </link>
+        <updated>2020-02-11T07:02:21.000Z</updated>
+        <content type="html"><![CDATA[<p><img src="https://han113.github.io//post-images/1581404637166.png" alt="" loading="lazy"><br>
+lecode官网给了一个环形替换的解法，看懂一点，记录一下<br>
+用覆盖的方法的话，1如果移动到4的位置，那4的值就<code>丢</code>了，所以<code>需要一个变量来记录</code>，那4再向后移动到指定位置7，接着记录那个位置原来的值7，7也向后移动到3的位置，所以变化是<br>
+<code>1-&gt;4-&gt;7-&gt;3-&gt;6-&gt;2-&gt;5-&gt;1</code>正好最后一个值又回到开始的位置<br>
+<img src="https://han113.github.io//post-images/1581405545038.png" alt="" loading="lazy"><br>
+这个例子的变化是<code>-1-&gt;3-&gt;-1</code> 这个和第一个例子不一样，<code>没有移动完但也回到了原来的位置</code>，所以需要一个<code>count</code>记录几个元素位置发生了变化，如果count不等于数组元素个数，再进行一轮，看下面这个进行了两轮</p>
+<figure data-type="image" tabindex="1"><img src="https://han113.github.io//post-images/1581404812623.png" alt="" loading="lazy"></figure>
+<h1 id="代码">代码<img src="https://han113.github.io//post-images/1581406155196.png" alt="" loading="lazy"></h1>
+<pre><code class="language-java">public static  void rotate(int[] nums, int k) {
+        //定义变量，left 左指针，right右指针，prev记录上一个元素值，count有几个元素已经移动完了
+        int prev=0;
+        int count=0;
+
+        for (int left=0;count&lt;nums.length;left++){//count等于数组元素个数的时候结束
+
+            int right=left;
+            prev=nums[left];
+            do {
+                int next=(right+k)%nums.length;//防止数组下标越界
+                int temp=nums[next];
+                nums[next]=prev;
+                prev=temp;//此时prev已经记录了下一个需要的移动的值
+
+                right=next;
+                count++;//计数
+            }while (right!=left); //一轮结束
+        }
+        System.out.println(Arrays.toString(nums));
+    }
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[部分和问题]]></title>
         <id>https://han113.github.io/post/bu-fen-he-wen-ti</id>
