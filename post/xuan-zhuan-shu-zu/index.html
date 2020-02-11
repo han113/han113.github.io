@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://han113.github.io//favicon.ico?v=1581406157391">
+<link rel="shortcut icon" href="https://han113.github.io//favicon.ico?v=1581407100275">
 <link rel="stylesheet" href="https://han113.github.io//styles/main.css">
 
 
@@ -25,9 +25,12 @@
 
 
     <meta name="description" content="
-lecode官网给了一个环形替换的解法，看懂一点，记录一下
-用覆盖的方法的话，1如果移动到4的位置，那4的值就丢了，所以需要一个变量来记录，那4再向后移动到指定位置7，接着记录那个位置原来的值7，7也向后移动到3的位置，所以变化是
-1-&..." />
+暴力
+每次旋转一个元素
+ //暴力移动
+    public static void rotateByRemove(int[] nums, int k){
+       
+        for (int i=0;i&lt;k;i++){..." />
     <meta name="keywords" content="算法题" />
   </head>
   <body>
@@ -37,7 +40,7 @@ lecode官网给了一个环形替换的解法，看懂一点，记录一下
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://han113.github.io/">
-        <img src="https://han113.github.io//images/avatar.png?v=1581406157391" class="site-logo">
+        <img src="https://han113.github.io//images/avatar.png?v=1581407100275" class="site-logo">
         <h1 class="site-title">看远看近</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -103,13 +106,36 @@ lecode官网给了一个环形替换的解法，看懂一点，记录一下
             <div class="post-date">2020-02-11</div>
             
             <div class="post-content" v-pre>
-              <p><img src="https://han113.github.io//post-images/1581404637166.png" alt="" loading="lazy"><br>
-lecode官网给了一个环形替换的解法，看懂一点，记录一下<br>
+              <figure data-type="image" tabindex="1"><img src="https://han113.github.io//post-images/1581404637166.png" alt="" loading="lazy"></figure>
+<h1 id="暴力">暴力</h1>
+<p>每次旋转一个元素</p>
+<pre><code class="language-java"> //暴力移动
+    public static void rotateByRemove(int[] nums, int k){
+       
+        for (int i=0;i&lt;k;i++){
+            //单次
+            int count=0;
+            int prev=nums[nums.length-1];//指向最后一个
+           
+            for (int left=0;count&lt;nums.length;left++){
+                int temp=nums[left];
+                nums[left]=prev;
+                prev=temp;//prev记录了前一个的值
+
+                count++;//记录多少个元素移动了
+            }
+            
+            System.out.println(Arrays.toString(nums));
+        }
+    }
+</code></pre>
+<h1 id="环形替换法">环形替换法</h1>
+<p>lecode官网给了一个环形替换的解法，看懂一点，记录一下<br>
 用覆盖的方法的话，1如果移动到4的位置，那4的值就<code>丢</code>了，所以<code>需要一个变量来记录</code>，那4再向后移动到指定位置7，接着记录那个位置原来的值7，7也向后移动到3的位置，所以变化是<br>
 <code>1-&gt;4-&gt;7-&gt;3-&gt;6-&gt;2-&gt;5-&gt;1</code>正好最后一个值又回到开始的位置<br>
 <img src="https://han113.github.io//post-images/1581405545038.png" alt="" loading="lazy"><br>
 这个例子的变化是<code>-1-&gt;3-&gt;-1</code> 这个和第一个例子不一样，<code>没有移动完但也回到了原来的位置</code>，所以需要一个<code>count</code>记录几个元素位置发生了变化，如果count不等于数组元素个数，再进行一轮，看下面这个进行了两轮</p>
-<figure data-type="image" tabindex="1"><img src="https://han113.github.io//post-images/1581404812623.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://han113.github.io//post-images/1581404812623.png" alt="" loading="lazy"></figure>
 <h1 id="代码">代码<img src="https://han113.github.io//post-images/1581406155196.png" alt="" loading="lazy"></h1>
 <pre><code class="language-java">public static  void rotate(int[] nums, int k) {
         //定义变量，left 左指针，right右指针，prev记录上一个元素值，count有几个元素已经移动完了
